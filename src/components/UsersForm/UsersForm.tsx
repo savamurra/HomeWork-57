@@ -1,42 +1,42 @@
 import { useState } from 'react';
 import { IUserMutation, IUsers } from '../../types';
 import * as React from 'react';
+
 interface IUsersFormProps {
   addNewUser: (newUser: IUsers) => void;
 }
 
-const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
-
+const UsersForm: React.FC<IUsersFormProps> = ({addNewUser}) => {
   const role: { userRole: string }[] = [
     {userRole: 'Admin'},
     {userRole: 'Employee'},
-    {userRole: 'Consumer',}
-  ]
+    {userRole: 'Consumer'},
+  ];
 
+  const [newUser, setNewUser] = useState<IUserMutation>({
+    name: '',
+    email: '',
+    activity: false,
+    role: '',
+    urlImage: '',
+  });
 
-    const [newUser, setNewUser] = useState<IUserMutation>({
-      name: '',
-      email: '',
-      activity: false,
-      role: '',
-      urlImage: '',
-    })
-
-
-  const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const changeUser = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setNewUser((prevState) => {
       return {
         ...prevState,
-        [e.target.name]: e.target.type === "checkbox" ? e.target.checked : e.target.value,
-      }
-    })
-  }
-
+        [e.target.name]:
+          e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+      };
+    });
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newUser.name.trim().length === 0 && newUser.email.trim().length === 0) {
-      alert("Для создания карточки нужно заполните пустые поля")
+      alert('Для создания карточки нужно заполните пустые поля');
     } else {
       addNewUser({
         id: crypto.randomUUID(),
@@ -44,14 +44,14 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
       });
 
       setNewUser({
-        name: "",
-        email: "",
+        name: '',
+        email: '',
         activity: false,
-        role:"",
-        urlImage: ""
-      })
+        role: '',
+        urlImage: '',
+      });
     }
-  }
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -94,7 +94,11 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
         />
       </div>
 
-      <div className="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
+      <div
+        className="btn-group mb-3"
+        role="group"
+        aria-label="Basic checkbox toggle button group"
+      >
         <input
           onChange={changeUser}
           checked={newUser.activity}
@@ -103,17 +107,13 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
           id="activity"
           name="activity"
         />
-        <label
-          htmlFor="activity"
-          className="btn btn-outline-primary"
-        >
+        <label htmlFor="activity" className="btn btn-outline-primary">
           Activity
         </label>
       </div>
 
       <div className="form-floating mb-3">
         Role:
-
         <select
           className="form-select p-2"
           name="role"
@@ -122,9 +122,13 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
           onChange={changeUser}
           required
         >
-          <option value="" disabled>Выберите Роль</option>
+          <option value="" disabled>
+            Выберите Роль
+          </option>
           {role.map((item) => (
-            <option key={item.userRole + 1} value={item.userRole}>{item.userRole}</option>
+            <option key={item.userRole + 1} value={item.userRole}>
+              {item.userRole}
+            </option>
           ))}
         </select>
       </div>
