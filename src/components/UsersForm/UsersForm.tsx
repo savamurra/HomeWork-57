@@ -35,19 +35,22 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (newUser.name.trim().length === 0 && newUser.email.trim().length === 0) {
+      alert("Для создания карточки нужно заполните пустые поля")
+    } else {
+      addNewUser({
+        id: crypto.randomUUID(),
+        ...newUser,
+      });
 
-    addNewUser({
-      id: crypto.randomUUID(),
-      ...newUser,
-    });
-
-    setNewUser({
-      name: "",
-      email: "",
-      activity: false,
-      role:"",
-      urlImage: ""
-    })
+      setNewUser({
+        name: "",
+        email: "",
+        activity: false,
+        role:"",
+        urlImage: ""
+      })
+    }
   }
 
   return (
@@ -62,6 +65,7 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
           id="name"
           name="name"
           className="form-control"
+          required
         />
       </div>
 
@@ -74,6 +78,7 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
           id="email"
           name="email"
           className="form-control"
+          required
         />
       </div>
 
@@ -115,6 +120,7 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
           id="role"
           value={newUser.role}
           onChange={changeUser}
+          required
         >
           <option value="" disabled>Выберите Роль</option>
           {role.map((item) => (
