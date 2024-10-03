@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IUser, IUsers } from '../../types';
+import { IUserMutation, IUsers } from '../../types';
 import * as React from 'react';
 interface IUsersFormProps {
   addNewUser: (newUser: IUsers) => void;
@@ -14,7 +14,7 @@ const UsersForm:React.FC<IUsersFormProps> = ({addNewUser}) => {
   ]
 
 
-    const [newUser, setNewUser] = useState<IUser>({
+    const [newUser, setNewUser] = useState<IUserMutation>({
       name: '',
       email: '',
       activity: false,
